@@ -1,0 +1,114 @@
+:root {
+  --base-font-size: 16px;
+}
+
+html {
+  font-size: var(--base-font-size);
+}
+
+/* Default light mode */
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(2,6,23,0.06);
+}
+
+/* Dark mode */
+html.dark, body.dark {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.dark body,
+html.dark nav,
+html.dark header {
+  background-color: #000 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .card {
+  background-color: #111 !important;
+  color: #e2e8f0 !important;
+}
+
+/* High Contrast mode */
+body.hc {
+  background-color: #000 !important;
+  color: #ff0 !important;
+}
+
+body.hc .card {
+  background-color: #000 !important;
+  border: 2px solid #fff !important;
+  color: #ff0 !important;
+}
+
+body.hc a,
+body.hc button {
+  background-color: #000 !important;
+  color: #ff0 !important;
+  border: 2px solid #fff !important;
+}
+
+/* High Contrast + Dark together */
+body.hc.dark {
+  background-color: #000 !important;
+  color: #ff0 !important;
+}
+
+body.hc.dark .card {
+  background-color: #000 !important;
+  border: 2px solid #ff0 !important;
+  color: #ff0 !important;
+}
+
+body.hc.dark a,
+body.hc.dark button {
+  background-color: #ff0 !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+}
+
+/* Utility classes */
+.section-title {
+  @apply text-lg font-semibold mb-2;
+}
+
+.badge {
+  @apply inline-flex items-center px-2 py-0.5 text-xs rounded-full font-medium;
+}
+
+.input, .select, .textarea {
+  @apply w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-xl font-semibold;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+.btn-ghost {
+  @apply bg-slate-100 hover:bg-slate-200;
+}
+
+/* Layout modes */
+.grid-cards { 
+  display: grid; 
+  grid-template-columns: repeat(2, minmax(0,1fr)); 
+  gap: 1rem; 
+}
+
+.list-cards > * { 
+  margin-bottom: .75rem; 
+}
+
+.minimal-cards > * { 
+  margin-bottom: .5rem; 
+}

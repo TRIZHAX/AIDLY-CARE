@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Input</title>
+  <style>
+    :root { --base-font-size: 16px; }
+    html { font-size: var(--base-font-size); font-family: Arial, sans-serif; }
+    body { margin: 0; background: #f9fafb; color: #111; }
+
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    }
+    header h1 { font-size: 1.25rem; margin: 0; }
+    header span { font-size: .9rem; color: #555; }
+
+    .container { padding: 1rem; max-width: 500px; margin: auto; }
+
+    .card {
+      background: #fff; border-radius: 1rem; padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(2,6,23,0.06); margin-bottom: 1rem;
+    }
+
+    .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: .75rem; }
+
+    .btn {
+      display: inline-block; width: 100%;
+      padding: 1rem; text-align: center;
+      border-radius: 1rem; font-weight: 600;
+      cursor: pointer; border: none;
+    }
+    .btn-primary { background: #16a34a; color: white; }
+    .btn-primary:hover { background: #15803d; }
+
+    #voiceOutput {
+      margin-top: 1rem; padding: 1rem;
+      border: 1px solid #e2e8f0; border-radius: 1rem;
+      background: #f1f5f9;
+    }
+
+    /* Bottom nav */
+    nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 5px rgba(0,0,0,.05);
+    }
+    nav .grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      text-align: center; font-size: .9rem;
+    }
+    nav a { padding: .5rem 0; color: #111; text-decoration: none; }
+    nav a div:first-child { font-size: 1.2rem; }
+    nav a:hover { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Voice Input</h1>
+      <span>Convert speech to text</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="section-title">Tap and Speak</div>
+      <button class="btn btn-primary" onclick="startListening()">🎤 Start Listening</button>
+      <div id="voiceOutput">Your speech will appear here...</div>
+    </div>
+  </div>
+
+
+  <nav>
+    <div class="grid">
+      <a href="index.html"><div>🏠</div><div>Home</div></a>
+      <a href="medicine.html"><div>💊</div><div>Medicine</div></a>
+      <a href="calendar.html"><div>📅</div><div>Calendar</div></a>
+      <a href="profile.html"><div>👤</div><div>Profile</div></a>
+      <a href="settings.html"><div>⚙️</div><div>Settings</div></a>
+    </div>
+  </nav>
+
+  <script>
+    function startListening() {
+      const output = document.getElementById("voiceOutput");
+      if (!('webkitSpeechRecognition' in window)) {
+        output.innerText = "Sorry, your browser doesn't support speech recognition.";
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.start();
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        output.innerText = "You said: " + transcript;
+      };
+
+      recognition.onerror = (event) => {
+        output.innerText = "Error: " + event.error;
+      };
+    }
+  </script>
+</body>
+</html>

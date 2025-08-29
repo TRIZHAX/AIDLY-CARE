@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <style>
+    :root {
+      --base-font-size: 16px;
+    }
+    html { font-size: var(--base-font-size); font-family: Arial, sans-serif; }
+    body { margin: 0; background: #f9fafb; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 8px 20px rgba(2,6,23,0.06);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1rem;
+      display: block;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    h2 { margin-bottom: 1rem; }
+    .input {
+      width: 100%; padding: 0.8rem; margin-bottom: 1rem;
+      border: 1px solid #d1d5db; border-radius: 0.75rem;
+    }
+    .btn {
+      display: block; width: 100%; padding: 0.8rem;
+      border: none; border-radius: 0.75rem; font-weight: bold; cursor: pointer;
+    }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .link { margin-top: 1rem; font-size: 0.9rem; }
+    .link a { color: #2563eb; text-decoration: none; }
+    .link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <img src="logo.png" alt="App Logo" class="logo">
+
+    <h2>Create Account</h2>
+    <form action="index.html" method="post">
+      <input type="text" class="input" placeholder="Full Name" required>
+      <input type="email" class="input" placeholder="Email" required>
+      <input type="password" class="input" placeholder="Password" required>
+      <input type="password" class="input" placeholder="Confirm Password" required>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    <div class="link">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+  </div>
+</body>
+</html>
