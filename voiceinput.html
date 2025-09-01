@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voice Input - AIDLY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          borderRadius: { '2xl': '1.25rem' }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/app.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 transition-colors duration-300">
+
+  <header class="bg-white dark:bg-slate-900 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-xl mx-auto p-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img id="headerPhoto" src="logo.png" class="w-12 h-12 rounded-full">
+        <div>
+          <h1 class="text-xl font-semibold">AIDLY <span id="headerName">CARE</span></h1>
+          <p class="text-slate-500 text-sm">Speech to Text Input</p>
+        </div>
+      </div>
+      <a href="settings.html" class="btn btn-ghost">⚙️</a>
+    </div>
+  </header>
+
+
+  <section class="max-w-xl mx-auto p-4">
+    <div class="card p-4 bg-blue-50">
+      <h2 class="section-title mb-2">🎤 Voice Input</h2>
+      <p class="text-slate-600 mb-4">Press the button and speak. Your words will appear below.</p>
+
+
+      <label for="sensitivity" class="block text-sm font-medium mb-1">Sensitivity</label>
+      <input id="sensitivity" type="range" min="0" max="10" value="5" class="w-full mb-4">
+
+ 
+      <button class="btn btn-primary w-full mb-4" onclick="startListening()">🎙 Start Listening</button>
+
+
+      <div id="voiceOutput" class="textarea p-3 rounded-xl border border-slate-200 min-h-[80px] bg-white dark:bg-slate-800 text-slate-900 dark:text-white mb-4"></div>
+
+ 
+      <h3 class="section-title mb-2 text-sm">History</h3>
+      <div id="voiceHistory" class="textarea p-3 rounded-xl border border-slate-200 min-h-[80px] bg-white dark:bg-slate-800 text-slate-900 dark:text-white overflow-y-auto max-h-40"></div>
+    </div>
+  </section>
+
+ 
+  <nav class="fixed bottom-0 inset-x-0 bg-white dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-700 shadow z-50">
+    <div class="max-w-xl mx-auto grid grid-cols-5 text-center text-sm">
+      <a href="index.html" class="py-3 hover:font-semibold"><div>🏠</div><div>Home</div></a>
+      <a href="medicine.html" class="py-3 hover:font-semibold"><div>💊</div><div>Medicine</div></a>
+      <a href="calendar.html" class="py-3 hover:font-semibold"><div>📅</div><div>Calendar</div></a>
+      <a href="readaloud.html" class="py-3 hover:font-semibold"><div>🔊</div><div>Read Aloud</div></a>
+      <a href="settings.html" class="py-3 hover:font-semibold"><div>⚙️</div><div>Settings</div></a>
+    </div>
+  </nav>
+
+  <script>
+    const historyContainer = document.getElementById("voiceHistory");
+    const output = document.getElementById("voiceOutput");
+    const sensitivityInput = document.getElementById("sensitivity");
+
+    function startListening() {
+      if (!('webkitSpeechRecognition' in window)) {
+        output.innerText = "Sorry, your browser doesn't support speech recognition.";
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      // Sensitivity (just a demo threshold, can be used in a real app with audio analysis)
+      const sensitivity = parseInt(sensitivityInput.value, 10);
+      console.log("Sensitivity level:", sensitivity);
+
+      recognition.start();
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        output.innerText = "You said: " + transcript;
+        // Add to history
+        const entry = document.createElement("div");
+        entry.textContent = transcript;
+        historyContainer.prepend(entry);
+      };
+
+      recognition.onerror = (event) => {
+        output.innerText = "Error: " + event.error;
+      };
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    
+    tailwind.config = {
+      theme: {
+        extend: {
+          borderRadius: { '2xl': '1.25rem' }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/app.js"></script>
+  <script defer src="js/profile.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 transition-colors duration-300">
+
+  <header class="bg-white dark:bg-slate-900 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-xl mx-auto p-4 flex items-center justify-between">
+      <h1 class="text-xl font-semibold">Profile</h1>
+      <a href="index.html" class="btn btn-ghost">🏠</a>
+    </div>
+  </header>
+
+  <main class="max-w-xl mx-auto p-4 space-y-4">
+    <section class="card p-4 text-center">
+      <img id="photoPreview" src="https://via.placeholder.com/96" class="w-24 h-24 rounded-full mx-auto" />
+      <form id="profileForm" class="mt-4 grid gap-3">
+        <input id="photo" type="file" accept="image/*" class="input" />
+        <input id="name" class="input" placeholder="Full name" />
+        <div class="grid grid-cols-2 gap-3">
+          <input id="age" class="input" placeholder="Age" />
+          <input id="blood" class="input" placeholder="Blood type" />
+        </div>
+        <input id="allergies" class="input" placeholder="Allergies" />
+        <input id="insurance" class="input" placeholder="Insurance" />
+        <button class="btn btn-primary">Save Profile</button>
+      </form>
+    </section>
+
+    <section class="card p-4">
+      <h2 class="section-title">Emergency Contacts</h2>
+      <form id="contactForm" class="grid grid-cols-3 gap-3">
+        <input id="cName" class="input" placeholder="Name" required />
+        <input id="cRelation" class="input" placeholder="Relation" required />
+        <input id="cPhone" class="input" placeholder="Phone" required />
+        <button class="btn btn-primary col-span-3">Add Contact</button>
+      </form>
+      <div id="contacts" class="mt-3 space-y-2"></div>
+    </section>
+  </main>
+
+
+  <nav class="fixed bottom-0 inset-x-0 bg-white dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-700 shadow z-50">
+    <div class="max-w-xl mx-auto grid grid-cols-5 text-center text-sm">
+      <a href="index.html" class="py-3 hover:font-semibold"><div>🏠</div><div>Home</div></a>
+      <a href="medicine.html" class="py-3 hover:font-semibold"><div>💊</div><div>Medicine</div></a>
+      <a href="calendar.html" class="py-3 hover:font-semibold"><div>📅</div><div>Calendar</div></a>
+      <a href="profile.html" class="py-3 hover:font-semibold"><div>👤</div><div>Profile</div></a>
+      <a href="settings.html" class="py-3 hover:font-semibold"><div>⚙️</div><div>Settings</div></a>
+    </div>
+  </nav>
+</body>
+</html>
