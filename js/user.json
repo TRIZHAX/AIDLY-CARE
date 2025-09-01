@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "email": "tsantos@spusm.edu.ph",
+    "password": "321098123",
+    "fullName": "Tristan Kent Santos",
+    "age": 21,
+    "blood": "O",
+    "allergies": "",
+    "insurance": "None",
+    "contacts": [
+      {
+        "name": "Maria Lopez",
+        "relation": "Friend",
+        "phone": "09171234567"
+      }
+    ]
+  }
+]
