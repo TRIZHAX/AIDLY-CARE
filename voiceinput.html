@@ -32,29 +32,27 @@
     </div>
   </header>
 
-
   <section class="max-w-xl mx-auto p-4">
-    <div class="card p-4 bg-blue-50">
+    <div class="card p-4 bg-blue-50 rounded-2xl shadow">
       <h2 class="section-title mb-2">🎤 Voice Input</h2>
       <p class="text-slate-600 mb-4">Press the button and speak. Your words will appear below.</p>
-
 
       <label for="sensitivity" class="block text-sm font-medium mb-1">Sensitivity</label>
       <input id="sensitivity" type="range" min="0" max="10" value="5" class="w-full mb-4">
 
- 
-      <button class="btn btn-primary w-full mb-4" onclick="startListening()">🎙 Start Listening</button>
+      <div class="flex gap-2 mb-4">
+        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl py-2 shadow-md" onclick="startListening()">🎙 Start Listening</button>
+        <button class="flex-1 bg-red-600 hover:bg-red-700 text-white rounded-2xl py-2 shadow-md" onclick="stopListening()">🛑 Stop Listening</button>
+      </div>
+      <button class="w-full bg-yellow-500 hover:bg-yellow-600 text-white rounded-2xl py-2 shadow-md mb-4" onclick="clearHistory()">🗑 Clear History</button>
 
+      <div id="voiceOutput" class="textarea p-3 rounded-2xl border border-slate-200 min-h-[80px] bg-white dark:bg-slate-800 text-slate-900 dark:text-white mb-4 flex items-center justify-center text-center"></div>
 
-      <div id="voiceOutput" class="textarea p-3 rounded-xl border border-slate-200 min-h-[80px] bg-white dark:bg-slate-800 text-slate-900 dark:text-white mb-4"></div>
-
- 
       <h3 class="section-title mb-2 text-sm">History</h3>
-      <div id="voiceHistory" class="textarea p-3 rounded-xl border border-slate-200 min-h-[80px] bg-white dark:bg-slate-800 text-slate-900 dark:text-white overflow-y-auto max-h-40"></div>
+      <div id="voiceHistory" class="p-3 rounded-2xl border border-slate-200 min-h-[80px] bg-white dark:bg-slate-800 text-slate-900 dark:text-white overflow-y-auto max-h-40 space-y-2"></div>
     </div>
   </section>
 
- 
   <nav class="fixed bottom-0 inset-x-0 bg-white dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-700 shadow z-50">
     <div class="max-w-xl mx-auto grid grid-cols-5 text-center text-sm">
       <a href="index.html" class="py-3 hover:font-semibold"><div>🏠</div><div>Home</div></a>
@@ -70,35 +68,53 @@
     const output = document.getElementById("voiceOutput");
     const sensitivityInput = document.getElementById("sensitivity");
 
+    let recognition;
+
     function startListening() {
       if (!('webkitSpeechRecognition' in window)) {
         output.innerText = "Sorry, your browser doesn't support speech recognition.";
         return;
       }
 
-      const recognition = new webkitSpeechRecognition();
+      recognition = new webkitSpeechRecognition();
       recognition.lang = "en-US";
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
-      // Sensitivity (just a demo threshold, can be used in a real app with audio analysis)
       const sensitivity = parseInt(sensitivityInput.value, 10);
       console.log("Sensitivity level:", sensitivity);
 
+      output.innerHTML = `<span class="animate-pulse">🎤 Listening...</span>`;
       recognition.start();
 
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         output.innerText = "You said: " + transcript;
-        // Add to history
+
         const entry = document.createElement("div");
-        entry.textContent = transcript;
+        entry.className = "bg-blue-100 dark:bg-slate-700 p-2 rounded-xl text-sm";
+        entry.textContent = transcript + " • " + new Date().toLocaleTimeString();
         historyContainer.prepend(entry);
       };
 
       recognition.onerror = (event) => {
         output.innerText = "Error: " + event.error;
       };
+
+      recognition.onend = () => {
+        output.innerText = "🎤 Stopped listening.";
+      };
+    }
+
+    function stopListening() {
+      if (recognition) {
+        recognition.stop();
+        output.innerText = "🎤 Stopped listening.";
+      }
+    }
+
+    function clearHistory() {
+      historyContainer.innerHTML = "";
     }
   </script>
 </body>
