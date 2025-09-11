@@ -1,24 +1,42 @@
-const form = document.getElementById('registerForm');
+document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("registerForm");
 
-form.addEventListener('submit', async e => {
-  e.preventDefault();
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
+    const user = {
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value.trim(),
+      profile: {
+        name: document.getElementById("name").value.trim(),
+        age: document.getElementById("age").value.trim(),
+        blood: document.getElementById("blood").value.trim(),
+        allergies: document.getElementById("allergies").value.trim(),
+        insurance: document.getElementById("insurance").value.trim(),
+        photo: "",
+        contacts: []
+      }
+    };
 
-  try {
-    const res = await fetch('/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
+    let users = [];
+    try {
+      const stored = JSON.parse(localStorage.getItem("users") || "[]");
+      if (Array.isArray(stored)) {
+        users = stored;
+      }
+    } catch (err) {
+      users = [];
+    }
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
+    if (users.some(u => u.email === user.email)) {
+      alert("Email already registered!");
+      return;
+    }
 
-    alert(data.message);
-    window.location.href = 'login.html';
-  } catch (err) {
-    alert(err.message);
-  }
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registration successful! Please login.");
+    window.location.href = "login.html";
+  });
 });
