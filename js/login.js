@@ -1,25 +1,21 @@
-const form = document.getElementById('loginForm');
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
 
-form.addEventListener('submit', async e => {
-  e.preventDefault();
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-  try {
-    const res = await fetch('/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(u => u.email === email && u.password === password);
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-
-    alert(data.message);
-    localStorage.setItem('loggedInUser', email); // keep logged in
-    window.location.href = 'index.html';
-  } catch (err) {
-    alert(err.message);
-  }
+    if (user) {
+      localStorage.setItem("loggedInUser", email);
+      alert("Login successful!");
+      window.location.href = "index.html"; 
+    } else {
+      alert("Invalid email or password");
+    }
+  });
 });
