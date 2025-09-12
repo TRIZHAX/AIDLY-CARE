@@ -248,7 +248,7 @@ const knowledgeBase = [
   { q: /switch.*login/i, a: "On the Register page, click the link 'Already have an account? Login'." },
   { q: /edit.*profile/i, a: "Go to the Profile page and update your details." },
   { q: /update.*email/i, a: "Edit your email in the Profile page and save." },
-  { q: /change.*password/i, a: "Go to the Profile page and update your password." },
+  { q: /change.*password/i, a: "Right now, the app does not support password changing. Please re-register." },
   { q: /insurance/i, a: "Fill in the Insurance field in your profile." },
   { q: /allergies/i, a: "Enter your allergies in the Allergies field on the Profile page." },
   { q: /profile photo/i, a: "At this time, only the default logo is supported." },
